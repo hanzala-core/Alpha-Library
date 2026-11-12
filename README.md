@@ -6,7 +6,7 @@ GitHub Projects.
 | --- | --- | --- |
 | Product Owner (PO) | <Rayyan Ahmed> | @<Dev-Rayyan-Ahmed> |
 | Scrum Master (SM) | <Muhammad Hanzala> | @<hanzala-core> |
-| Developer | <Anas Malick> | @AnasMalick887> |
+| Developer | <Anas Malick> | <@AnasMalick887> |
 | Developer | <Muhammad Faiz> | @<chotimau> |
 | Stakeholder | Miss Mahnoor | @<Mahn00rMalik> |
 ## Definition of Done
