@@ -4,7 +4,7 @@ from library import catalog, members, loans
 
 def render_table(headers, rows):
     rows = [tuple(str(value) for value in row) for row in rows]
-    widths = [max(len(str(h)), *(len(row[i]) for row in rows))
+    widths = [max([len(str(h))] + [len(row[i]) for row in rows])
               for i, h in enumerate(headers)]
     line = " | ".join(str(h).ljust(widths[i]) for i, h in enumerate(headers))
     bar = "-+-".join("-" * width for width in widths)
