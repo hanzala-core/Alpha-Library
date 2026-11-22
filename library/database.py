@@ -17,12 +17,14 @@ def connect(path="alpha_library.db"):
             author TEXT NOT NULL,
             isbn TEXT NOT NULL UNIQUE,
             category TEXT NOT NULL DEFAULT 'General',
-            total_copies INTEGER NOT NULL CHECK (total_copies >= 1)
+            total_copies INTEGER NOT NULL CHECK (total_copies >= 1),
+            is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1))
         );
         CREATE TABLE IF NOT EXISTS members (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE
+            email TEXT NOT NULL UNIQUE,
+            is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1))
         );
         CREATE TABLE IF NOT EXISTS loans (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,4 +37,12 @@ def connect(path="alpha_library.db"):
         CREATE INDEX IF NOT EXISTS idx_loans_book_active ON loans(book_id, returned_at);
         CREATE INDEX IF NOT EXISTS idx_loans_member_active ON loans(member_id, returned_at);
     """)
+    # Add archive flags to databases created by earlier prototype versions.
+    for table in ("books", "members"):
+        columns = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
+        if "is_active" not in columns:
+            conn.execute(
+                f"ALTER TABLE {table} ADD COLUMN is_active INTEGER NOT NULL DEFAULT 1"
+            )
+    conn.commit()
     return conn

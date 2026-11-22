@@ -82,12 +82,21 @@ class MembersAndLoansTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "on loan"):
             remove_member(self.db, mid, confirm=True)
 
-    def test_cannot_remove_with_history(self):
+    def test_remove_member_after_return_preserves_history(self):
         mid = self.member()
         loan = issue_book(self.db, self.book, mid)
         return_book(self.db, loan)
-        with self.assertRaisesRegex(ValueError, "loan history"):
-            remove_member(self.db, mid, confirm=True)
+        self.assertTrue(remove_member(self.db, mid, confirm=True))
+        self.assertEqual(list_members(self.db), [])
+        self.assertEqual(self.db.execute(
+            "SELECT COUNT(*) FROM loans WHERE member_id=?", (mid,)
+        ).fetchone()[0], 1)
+
+    def test_archived_email_can_be_reregistered(self):
+        mid = self.member()
+        remove_member(self.db, mid, confirm=True)
+        self.assertEqual(register_member(self.db, "New Name", "member@example.com"), mid)
+        self.assertEqual(list_members(self.db)[0]["name"], "New Name")
 
     def test_member_loan_count(self):
         mid = self.member()

@@ -5,7 +5,7 @@ from library.catalog import get_book
 
 def issue_book(conn, book_id, member_id):
     book = get_book(conn, book_id)
-    if conn.execute("SELECT id FROM members WHERE id = ?", (member_id,)).fetchone() is None:
+    if conn.execute("SELECT id FROM members WHERE id = ? AND is_active=1", (member_id,)).fetchone() is None:
         raise ValueError("Member not found")
     if book["available"] <= 0:
         raise ValueError("No copies of this book are available")

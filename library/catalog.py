@@ -27,8 +27,8 @@ def validate_book(conn, title, author, isbn, category, copies, *, exclude_id=Non
         raise ValueError("Copies must be a positive integer") from exc
     if copies < 1:
         raise ValueError("Copies must be at least 1")
-    duplicate = conn.execute("SELECT id FROM books WHERE isbn = ?", (isbn,)).fetchone()
-    if duplicate is not None and duplicate["id"] != exclude_id:
+    duplicate = conn.execute("SELECT id, is_active FROM books WHERE isbn = ?", (isbn,)).fetchone()
+    if duplicate is not None and duplicate["id"] != exclude_id and (exclude_id is not None or duplicate["is_active"]):
         raise ValueError("ISBN already exists in the catalogue")
     return {
         "title": title, "author": author, "isbn": isbn,
@@ -38,6 +38,18 @@ def validate_book(conn, title, author, isbn, category, copies, *, exclude_id=Non
 
 def add_book(conn, title, author, isbn, category="General", copies=1):
     data = validate_book(conn, title, author, isbn, category, copies)
+    archived = conn.execute(
+        "SELECT id FROM books WHERE isbn = ? AND is_active = 0", (data["isbn"],)
+    ).fetchone()
+    if archived is not None:
+        conn.execute(
+            """UPDATE books SET title=:title, author=:author, isbn=:isbn,
+               category=:category, total_copies=:total_copies, is_active=1
+               WHERE id=:id""",
+            {**data, "id": archived["id"]},
+        )
+        conn.commit()
+        return archived["id"]
     cur = conn.execute(
         """INSERT INTO books (title, author, isbn, category, total_copies)
            VALUES (:title, :author, :isbn, :category, :total_copies)""", data
@@ -53,6 +65,7 @@ def list_books(conn):
                b.total_copies - COUNT(l.id) AS available
         FROM books AS b
         LEFT JOIN loans AS l ON l.book_id = b.id AND l.returned_at IS NULL
+        WHERE b.is_active = 1
         GROUP BY b.id
         ORDER BY LOWER(b.title), b.id
     """).fetchall()
@@ -102,13 +115,8 @@ def delete_book(conn, book_id, *, confirm=False):
     book = get_book(conn, book_id)
     if book["available"] < book["total_copies"]:
         raise ValueError("Cannot delete a book while copies are on loan")
-    # Retain historical loan records; do not cascade-delete loan history.
-    prior_loans = conn.execute(
-        "SELECT COUNT(*) FROM loans WHERE book_id = ?", (book["id"],)
-    ).fetchone()[0]
-    if prior_loans:
-        raise ValueError("Cannot delete a book with loan history")
-    conn.execute("DELETE FROM books WHERE id = ?", (book["id"],))
+    # Soft delete: hide books from the catalogue while preserving past loan history.
+    conn.execute("UPDATE books SET is_active = 0 WHERE id = ?", (book["id"],))
     conn.commit()
     return True
 

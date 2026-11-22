@@ -27,7 +27,7 @@ Implement a small library catalogue and member-management system, guided by five
 - **Maintainability**: separate catalogue, members, loans, database and UI modules.
 - **Portability**: Python 3.11+ on Windows, Linux or macOS.
 - **Security**: SQL parameter binding; email validation; no hard-coded secrets.
-- **Data retention**: returned loans are kept in history. To prevent deleting historical records, the application also refuses deletion of books/members referenced by completed loans.
+- **Data retention**: returned loans are kept in history. Books and members with no active loans are soft-deleted, so old loan records remain intact. Archived ISBN and email records can be reactivated.
 
 ## Scope note for the lab workbook
 This existing Scrum team's implementation target is a **Python command-line application**, not an ASP.NET website. The original printed CS-326 lab manual contains ASP.NET master-page, login/signup, wireframe and database exercises. Do not claim equivalent ASP.NET work has been completed by this Python application. Confirm the adapted scope with Miss Mahnoor if those exercises must be fulfilled literally.

@@ -98,13 +98,23 @@ class CatalogueTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "on loan"):
             delete_book(self.db, id, confirm=True)
 
-    def test_delete_with_historical_loan_blocked(self):
+    def test_delete_with_historical_loan_preserves_history(self):
         id = self.add()
         member = register_member(self.db, "Ayesha", "a@example.com")
         loan = issue_book(self.db, id, member)
         return_book(self.db, loan)
-        with self.assertRaisesRegex(ValueError, "loan history"):
-            delete_book(self.db, id, confirm=True)
+        self.assertTrue(delete_book(self.db, id, confirm=True))
+        self.assertEqual(list_books(self.db), [])
+        self.assertEqual(self.db.execute(
+            "SELECT COUNT(*) FROM loans WHERE book_id=?", (id,)
+        ).fetchone()[0], 1)
+
+    def test_archived_isbn_can_be_reactivated(self):
+        id = self.add()
+        delete_book(self.db, id, confirm=True)
+        new_id = self.add(title="New Edition")
+        self.assertEqual(new_id, id)
+        self.assertEqual(get_book(self.db, id)["title"], "New Edition")
 
     def test_search_all_fields_case_insensitive(self):
         self.add()
