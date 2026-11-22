@@ -1,58 +1,85 @@
-# Scrum Sprint Plan - Alpha Library
+# Alpha Library - Scrum Sprint Plan (Miss Mahnoor handout)
 
-**Planning status:** proposed; no sprint is declared completed. Validate scope and assignments with the Product Owner before execution.
+**Authoritative reference:** the 37-page \`scrum.pdf\`, *Scrum with GitHub Projects — Library Management System Lab Activity*. See [Detailed Handout Alignment](HANDOUT_ALIGNMENT.md) for the nine-phase checklist and actual-vs-required gap.
 
-## Product vision
-A small library catalogue with basic book and member management. User stories are tracked in GitHub Issues. Feature branches and pull requests record code contributions, reviews and integration.
+**Planning note:** This is the Scrum Master's **proposal**, not a substitute for the Product Owner's ordering or actual Developer planning-poker estimates. Sprint dates, capacity, acceptance and review outcomes must be recorded from real team events.
 
-## Team
-- Product Owner: @Dev-Rayyan-Ahmed - prioritization, acceptance, stakeholder communication
-- Scrum Master: @hanzala-core - facilitate planning, standups, blockers, review and retrospective
-- Developer: @AnasMalick887 - edit/delete books and search, testing and peer review
-- Developer: @chotimau - list books and member management, testing and peer review
+## Team and Scrum accountabilities
 
-The existing issue history assigns Add Book to the Product Owner account. This is preserved, but code ownership can be delegated by the team during sprint planning.
-
-## Sprint 1 - Core catalogue
-**Goal:** enable essential librarian actions on catalogue records.
-
-| Story | Tasks | Responsible account |
+| Role | Account | Assignment |
 |---|---|---|
-| [US-01 Add Book #2](https://github.com/hanzala-core/Alpha-Library/issues/2) | #11 #13 #14 #16 | @Dev-Rayyan-Ahmed |
-| [US-02 List Books #3](https://github.com/hanzala-core/Alpha-Library/issues/3) | #5 #6 #7 | @chotimau |
-| [US-03 Edit/Delete #4](https://github.com/hanzala-core/Alpha-Library/issues/4) | #8 #9 #10 #12 | @AnasMalick887 |
+| Product Owner | @Dev-Rayyan-Ahmed | Owns Product Backlog ordering, answers questions, obtains stakeholder feedback, accepts/rejects stories. Does not code during sprint. |
+| Scrum Master | @hanzala-core | Configures project, runs events, removes blockers, records Scrum Log and Insights screenshots; may help with one small coding task only if sprint at risk. |
+| Developer | @AnasMalick887 | Estimates and delivers selected tasks on feature branches; reviews the other Developer's PRs. |
+| Developer | @chotimau | Estimates and delivers selected tasks on feature branches; reviews the other Developer's PRs. |
+| Stakeholder | Miss Mahnoor | Requirements, Sprint Review feedback and post-Sprint-1 change request. |
 
-**Sprint review evidence (only after implementation):** running app, book add/list/edit/delete demonstrations, rejection cases, automated tests, feature branches, peer-reviewed PRs. Record results and blockers in #1.
+## Product Goal
 
-## Sprint 2 - Discovery, members and integration
-**Goal:** deliver searchable catalogue and member registration/removal, then verify integrated flows.
+A simple system for a department library to keep track of books, registered members and borrowing activity.
 
-| Story | Tasks | Responsible account |
+## All nine product-backlog user stories
+
+| Story | Handout priority | Repo link or next action |
 |---|---|---|
-| [US-04 Search #15](https://github.com/hanzala-core/Alpha-Library/issues/15) | #18 #19 #20 | @AnasMalick887 |
-| [US-05 Members #17](https://github.com/hanzala-core/Alpha-Library/issues/17) | #21 #22 #23 | @chotimau |
+| US-01 Add book | Must | [Issue #2](https://github.com/hanzala-core/Alpha-Library/issues/2) |
+| US-02 List books | Must | [Issue #3](https://github.com/hanzala-core/Alpha-Library/issues/3) |
+| US-03 Edit/delete books | Should | [Issue #4](https://github.com/hanzala-core/Alpha-Library/issues/4) |
+| US-04 Search catalogue | Should | [Issue #15](https://github.com/hanzala-core/Alpha-Library/issues/15) |
+| US-05 Member registration/removal | Must | [Issue #17](https://github.com/hanzala-core/Alpha-Library/issues/17) |
+| US-06 Issue a book | Must | **PO to create**; 14-day due date, max 3 active loans, available copy and duplicate rule |
+| US-07 Return a book | Must | **PO to create**; return by loan ID and show active vs returned loans |
+| US-08 Overdue loans/fines | Should | **PO to create**; Rs 10 per late day |
+| US-09 Dashboard | Could | **PO to create**; title/member/loan/overdue counts and sample reset |
 
-**Sprint review evidence (only after implementation):** search tests, member validation, blocked removal with loans, integration tests, code reviews, final CLI demonstration and PO sign-off.
+The backlog may exceed sprint capacity **on purpose**. The PO orders it; Developers estimate S/M/L with planning poker. Split any L item before committing it to a Sprint.
 
-## Scrum working agreement
-- Product backlog: open, prioritized user stories with acceptance criteria.
-- Sprint backlog: stories committed for a sprint, broken into tasks assigned to collaborators.
-- Daily scrum: what was done, what is next, blockers; record actual notes as comments in [Scrum Log #1](https://github.com/hanzala-core/Alpha-Library/issues/1).
-- Sprint review: demonstrate working code and record PO feedback; do not mark an issue Done based on a plan.
-- Retrospective: list one improvement action and owner after each real review.
-- PR workflow: new branch -> commit -> PR to main -> other contributor reviews -> tests pass -> merge -> close issue.
+## Sprint 1 - Proposed initial commitment
 
-## Suggested GitHub Projects board
-Create or link a GitHub Project for this repository with status columns:
-**Product Backlog** -> **Sprint Backlog** -> **In Review** -> **Done**.
-Add custom fields: **Priority** (Must/Should/Could), **Size** (S/M/L) and **Sprint** (Sprint 1/Sprint 2). The board, fields, workflows and insights must be configured and captured in GitHub itself; this document does not imply they already exist.
+**Proposed Sprint Goal:** A librarian can add books and see the complete catalogue.
 
-## Suggested planning priority
-- **Must:** US-01, US-02, US-03
-- **Should:** US-04, US-05
-- **Could:** dashboard or other improvements, only after core acceptance
+**Example commitment from teacher handout:** 
+- Shared application skeleton (storage.py, main.py, .gitignore, starter books.py)
+- **US-01 Add book (reference M)** — Developer allocated by team
+- **US-02 List books (reference S)** — Other Developer allocated by team
 
-## Source alignment
-The team's supplied screenshot PDF shows another group's GitHub Projects approach (user stories, backlog, status, priority, size, sprint fields and insights). This file is the Alpha Library team's proposed adaptation, not evidence that those views have already been created.
+Use 35-minute implementation timebox after 10 minutes planning. Developers break only selected stories into sub-issues, work on their own branches, request human PR review and add tests in the same PR. At the real Daily Scrum, the SM records what each Developer finished, their next plan and blockers as a comment on [Scrum Log #1](https://github.com/hanzala-core/Alpha-Library/issues/1).
 
-The original workbook also describes ASP.NET web pages and wireframes; a Python CLI workflow by itself should not be represented as having fulfilled those web-page exercises unless the instructor approved the adapted Scrum activity.
+**Sprint Review:** The PO checks actual acceptance criteria; the instructor's feedback is noted; only accepted stories meeting DoD become Done. Create an Insights **Sprint 1 status** chart and attach a real screenshot to Scrum Log.
+
+**Retrospective:** Each member provides actual observations; the SM records the improvement issue(s). The instructor's actual change request is added by the PO during backlog refinement.
+
+## Sprint 2 - Select at the next planning meeting
+
+**Possible selection:** US-05 (reference M), or US-04 (reference S), or another combination that fits actual capacity. Carry over unfinished work only if the PO still prioritises it.
+
+The second Sprint has planning (5 minutes), work (30 minutes), Daily Scrum, Review (10 minutes), Retrospective (5 minutes). Repeat actual branch/PR/review/test/PO acceptance evidence and create **Sprint 2 status** chart.
+
+Afterward compare real velocity (finished story counts and sizes) and log it. The PO creates \`v1.0\` release on main listing genuinely delivered stories.
+
+## Definition of Done
+
+1. Every acceptance criterion met.
+2. Code merged to \`main\` from a feature branch through a PR.
+3. The other Developer reviewed and approved.
+4. PR closes its own issue with \`Closes #...\`.
+5. \`python main.py\` runs and \`python -m unittest\` passes.
+6. PO accepted the story during Sprint Review.
+
+## GitHub Projects settings required
+
+Project **Alpha Library Scrum Board** with:
+- Status: **Product Backlog / Sprint Backlog / In Progress / In Review / Done**
+- Priority: Must / Should / Could
+- Size: S / M / L
+- Sprint: Sprint 1 / Sprint 2
+- Views: Product Backlog (table grouped by Priority, unsorted) and Sprint Board (board by Status, filtered \`sprint:@current\`)
+- Workflows: auto-add issues; new → Product Backlog; closed issue and merged PR → Done
+- Main branch protection: 1 PR approval required
+- Sprint status Insights charts with screenshots
+
+For status and screenshot checks see [Evidence Checklist](EVIDENCE_CHECKLIST.md). No project board/field/automation is marked complete simply because it appears in these documents.
+
+## Reference-code mismatch
+
+Appendix A uses **Python 3.10+, JSON sample data, \`storage.py\`, \`books.py\`, \`members.py\`, \`loans.py\`, \`dashboard.py\` and \`test_library.py\`**. Existing separate integration PR #25 instead contains SQLite modules and its own tests. Its 36 passing tests are valid for that prototype, **not proof of strict Appendix A compliance or genuine story-by-story Scrum delivery**. Preserve PR #25 pending an explicit team decision; do not merge it as if it completed the handout steps.
