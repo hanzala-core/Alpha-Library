@@ -67,8 +67,10 @@ class CatalogueTests(unittest.TestCase):
     def test_edit_cannot_reduce_copies_below_active_loans(self):
         id = self.add()
         member = register_member(self.db, "Ayesha", "a@example.com")
+        other_member = register_member(self.db, "Bilal", "b@example.com")
         issue_book(self.db, id, member)
-        issue_book(self.db, id, member)
+        issue_book(self.db, id, other_member)
+        # Two different members hold one copy each; reducing total below 2 is invalid.
         with self.assertRaisesRegex(ValueError, "on loan"):
             edit_book(self.db, id, copies=1)
 
