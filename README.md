@@ -2,7 +2,7 @@
 
 **Collaborative Library Management System** managed using Scrum, GitHub Issues and pull requests.
 
-> **Current status:** Nine user stories and technical task backlog prepared; Product Owner approval and GitHub Projects board still pending. A separate **SQLite integration prototype** is available in [PR #25](https://github.com/hanzala-core/Alpha-Library/pull/25), with 36 passing unit tests, but is not merged or accepted as a Scrum Increment.
+> **Current status:** Nine user stories and technical task backlog prepared; Product Owner approval and GitHub Projects board still pending. A separate **SQLite integration prototype** is available in [PR #25](https://github.com/hanzala-core/Alpha-Library/pull/25), with 43 passing unit tests, but is not merged or accepted as a Scrum Increment.
 
 ## Team and responsibilities
 
@@ -57,7 +57,7 @@ See the [handout-alignment checklist](docs/HANDOUT_ALIGNMENT.md), [Sprint Plan](
 - [ ] Related issue is closed by the merged work.
 - [ ] Product Owner accepts the story during sprint review.
 
-**Teacher handout's intended verification:** `python main.py` and `python -m unittest` after story-scoped code is reviewed and merged to `main`. PR #25 separately reports 36 passing tests on its own branch; this does not demonstrate approved Sprint completion.
+**Teacher handout's intended verification:** `python main.py` and `python -m unittest` after story-scoped code is reviewed and merged to `main`. PR #25 separately reports 43 passing tests on its own branch; this does not demonstrate approved Sprint completion.
 
 ## Documentation
 
