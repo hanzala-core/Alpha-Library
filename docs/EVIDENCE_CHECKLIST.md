@@ -80,4 +80,4 @@ Mark a checkbox only after **real Alpha Library evidence** is available.
 - [ ] Real \`python main.py\` run output
 - [ ] Real \`python -m unittest\` successful tests for accepted stories
 
-**Important:** Existing PR #25 contains a separate SQLite prototype with 36 passing tests. That fact alone does NOT demonstrate the handout's sprint-by-sprint process, Appendix A compatibility, instructor change request, board configuration or PO approval.
+**Important:** Existing PR #25 contains a separate SQLite prototype with 43 passing tests. That fact alone does NOT demonstrate the handout's sprint-by-sprint process, Appendix A compatibility, instructor change request, board configuration or PO approval.
