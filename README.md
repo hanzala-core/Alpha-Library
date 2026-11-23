@@ -66,3 +66,49 @@ See the [handout-alignment checklist](docs/HANDOUT_ALIGNMENT.md), [Sprint Plan](
 - [Scrum Log](https://github.com/hanzala-core/Alpha-Library/issues/1)
 
 *GitHub Issues, PR history, Projects screenshots and implemented/tested code should reflect real activity, not simulated completion.*
+
+
+## Running the working integration prototype
+
+The application code is proposed in the feature branch [\`feat/working-library-integration\`](https://github.com/hanzala-core/Alpha-Library/tree/feat/working-library-integration), associated with integration [PR #25](https://github.com/hanzala-core/Alpha-Library/pull/25).
+
+**Prerequisites:** Python 3.11 or newer. No third-party Python packages are required.
+
+Clone and switch to the implementation branch:
+
+\`\`\`bash
+git clone https://github.com/hanzala-core/Alpha-Library.git
+cd Alpha-Library
+git switch feat/working-library-integration
+python main.py
+\`\`\`
+
+For a separate demonstration database:
+
+\`\`\`bash
+python main.py --db lab_demo.db
+\`\`\`
+
+The app creates the SQLite database on first run. Use the numbered menu to add/list/edit/delete books, search the catalogue, register/list/remove members, issue and return books, and review active loans. Copies are automatically calculated from outstanding loans. The file is local and ignored by Git.
+
+Run automated regression tests:
+
+\`\`\`bash
+python -m unittest discover -s tests -v
+\`\`\`
+
+GitHub Actions also runs tests on proposed branches and pull requests.
+
+### Implementation files
+- \`main.py\`: CLI entry point, optional database path
+- \`library/database.py\`: database schema and connection
+- \`library/catalog.py\`: book catalogue CRUD and search
+- \`library/members.py\`: library member management
+- \`library/loans.py\`: issue/return operations
+- \`library/ui.py\`: numbered interactive CLI
+- \`tests/\`: automated regression tests
+- \`docs/REQUIREMENTS.md\`: functional and non-functional requirements
+- \`docs/TEST_CASES.md\`: testing specification
+- \`docs/CLI_WIREFRAME.md\`: CLI wireframe (not an ASP.NET website)
+
+**Sprint evidence status:** Creating application code and opening an integration PR does not mean the original assignees have implemented/reviewed their stories. Do not close story issues or report sprint completion until real human reviews, demonstrations and Product Owner acceptance occur.

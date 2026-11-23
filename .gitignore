@@ -1,0 +1,13 @@
+# Local application data and environment
+alpha_library.db
+*.db
+*.db-shm
+*.db-wal
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+.idea/
+.vscode/

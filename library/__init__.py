@@ -1,0 +1,1 @@
+"""Alpha Library: small, testable library management application."""
