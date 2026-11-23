@@ -51,8 +51,11 @@ class MembersAndLoansTests(unittest.TestCase):
     def test_cannot_issue_when_no_copies_available(self):
         one_copy = add_book(self.db, "Single", "Writer", "1234567891", copies=1)
         issue_book(self.db, one_copy, self.member_id)
+        second_member = register_member(self.db, "Another Member", "second@example.com")
+        # Use a different member to isolate out-of-stock from the duplicate-loan rule.
         with self.assertRaisesRegex(ValueError, "No copies"):
-            issue_book(self.db, one_copy, self.member_id)
+            issue_book(self.db, one_copy, second_member)
+        self.assertEqual(get_book(self.db, one_copy)["available"], 0)
 
     def test_member_maximum_three_active_loans_boundary(self):
         for i in range(3):
