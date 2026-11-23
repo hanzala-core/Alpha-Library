@@ -2,7 +2,7 @@
 
 **Collaborative Library Management System** managed using Scrum, GitHub Issues and pull requests.
 
-> **Current status:** Requirements and task backlog prepared. Application implementation and test evidence are pending. Open issues are not completed features.
+> **Current status:** Nine user stories and technical task backlog prepared; Product Owner approval and GitHub Projects board still pending. A separate **SQLite integration prototype** is available in [PR #25](https://github.com/hanzala-core/Alpha-Library/pull/25), with 36 passing unit tests, but is not merged or accepted as a Scrum Increment.
 
 ## Team and responsibilities
 
@@ -22,15 +22,23 @@ Build a small library catalogue and member-management system. A planned Python c
 
 ## Product backlog
 
-| Sprint | User story | Current assignee |
-|---|---|---|
-| Sprint 1 | [US-01: Add a book](https://github.com/hanzala-core/Alpha-Library/issues/2) | Rayyan |
-| Sprint 1 | [US-02: List books](https://github.com/hanzala-core/Alpha-Library/issues/3) | Faiz |
-| Sprint 1 | [US-03: Edit/delete book](https://github.com/hanzala-core/Alpha-Library/issues/4) | Anas |
-| Sprint 2 | [US-04: Search books](https://github.com/hanzala-core/Alpha-Library/issues/15) | Anas |
-| Sprint 2 | [US-05: Manage members](https://github.com/hanzala-core/Alpha-Library/issues/17) | Faiz |
+The nine instructor-specified user stories are open and waiting for actual PO approval, Developer estimates and realistic Sprint selection. **The Sprint column below does not imply commitment.**
 
-See the linked story for acceptance criteria and child-task references. See [Sprint Plan](docs/SPRINT_PLAN.md) for proposed sequence and evidence requirements. Record real meeting outcomes in [Scrum Log #1](https://github.com/hanzala-core/Alpha-Library/issues/1).
+| Story | Handout priority | Proposed owner / reviewer |
+|---|---|---|
+| [US-01 Add book #2](https://github.com/hanzala-core/Alpha-Library/issues/2) | Must | Anas — proposed Developer for Sprint 1 |
+| [US-02 List books #3](https://github.com/hanzala-core/Alpha-Library/issues/3) | Must | Faiz — proposed Developer for Sprint 1 |
+| [US-03 Edit/delete book #4](https://github.com/hanzala-core/Alpha-Library/issues/4) | Should | Anas — backlog |
+| [US-04 Search books #15](https://github.com/hanzala-core/Alpha-Library/issues/15) | Should | Anas — backlog |
+| [US-05 Manage members #17](https://github.com/hanzala-core/Alpha-Library/issues/17) | Must | Faiz — backlog |
+| [US-06 Issue book #26](https://github.com/hanzala-core/Alpha-Library/issues/26) | Must | Rayyan to review/prioritize |
+| [US-07 Return book #27](https://github.com/hanzala-core/Alpha-Library/issues/27) | Must | Rayyan to review/prioritize |
+| [US-08 Overdue/fines #28](https://github.com/hanzala-core/Alpha-Library/issues/28) | Should | Rayyan to review/prioritize |
+| [US-09 Dashboard #29](https://github.com/hanzala-core/Alpha-Library/issues/29) | Could | Rayyan to review/prioritize |
+
+**Scrum Master setup:** [GitHub Projects board #31](https://github.com/hanzala-core/Alpha-Library/issues/31). **Sprint 1 skeleton:** [Task #30](https://github.com/hanzala-core/Alpha-Library/issues/30). Actual team review and planning-poker estimates still required.
+
+See the [handout-alignment checklist](docs/HANDOUT_ALIGNMENT.md), [Sprint Plan](docs/SPRINT_PLAN.md) and [Scrum Log #1](https://github.com/hanzala-core/Alpha-Library/issues/1).
 
 ## Development workflow
 
@@ -49,7 +57,7 @@ See the linked story for acceptance criteria and child-task references. See [Spr
 - [ ] Related issue is closed by the merged work.
 - [ ] Product Owner accepts the story during sprint review.
 
-**Planned execution (not yet verified):** `python main.py` and `python -m unittest`, once implementation and tests are committed.
+**Teacher handout's intended verification:** `python main.py` and `python -m unittest` after story-scoped code is reviewed and merged to `main`. PR #25 separately reports 36 passing tests on its own branch; this does not demonstrate approved Sprint completion.
 
 ## Documentation
 
