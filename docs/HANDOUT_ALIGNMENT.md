@@ -78,14 +78,14 @@ The Developers agree the size with **planning poker**; do not fabricate an estim
 | Handout Appendix A | PR #25 implementation |
 |---|---|
 | Python 3.10+; `storage.py` with `library_data.json`, sample data | Python 3.11+; SQLite `library/database.py`, local DB |
-| `books.py`, `members.py`, `loans.py`, `dashboard.py` | `library/catalog.py`, `library/members.py`, `library/loans.py`; dashboard missing |
-| `test_library.py`, `python -m unittest -v` | 36 tests across `tests/`; `python -m unittest discover -s tests -v` |
-| Due dates + max 3 loans + same-copy restriction | Not yet implemented |
-| Rs 10/day overdue/fine functions | Not yet implemented |
-| Dashboard and sample-data reset | Not yet implemented |
+| `books.py`, `members.py`, `loans.py`, `dashboard.py` | `library/catalog.py`, `library/members.py`, `library/loans.py`, `library/dashboard.py`; different modular structure |
+| `test_library.py`, `python -m unittest -v` | 43 passing tests across `tests/`; `python -m unittest discover -s tests -v` |
+| Due dates + max 3 loans + same-copy restriction | Implemented on prototype branch (unmerged), covered by tests |
+| Rs 10/day overdue/fine functions | Implemented on prototype branch (unmerged), covered by tests |
+| Dashboard and sample-data reset | Implemented on prototype branch (unmerged), covered by tests |
 | Story-by-story feature PRs from two Developers | One Scrum Master-authored integration prototype PR, pending team review |
 
-Passing 36 tests in PR #25 demonstrates quality of **that implementation's current scope**, not full Appendix A or Scrum lab compliance. Do not merge it claiming exact teacher handout execution. Plan as a reference/demo only unless the real team agrees to adjust it.
+Passing 43 tests in PR #25 demonstrates quality of **that implementation's current scope**, not full Appendix A or Scrum lab compliance. Do not merge it claiming exact teacher handout execution. Plan as a reference/demo only unless the real team agrees to adjust it.
 
 ## Next steps and owners
 
