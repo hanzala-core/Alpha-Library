@@ -1,6 +1,6 @@
 # Alignment with Miss Mahnoor's Actual Scrum Handout (Labs 9–11)
 
-**Primary source:** \`scrum.pdf\`, *Scrum with GitHub Projects — Library Management System Lab Activity*, 37 pages. This handout supersedes the older generic ASP.NET workbook instructions **for this specific assigned Scrum activity**.
+**Primary source:** `scrum.pdf`, *Scrum with GitHub Projects — Library Management System Lab Activity*, 37 pages. This handout supersedes the older generic ASP.NET workbook instructions **for this specific assigned Scrum activity**.
 
 ## The key outcome
 
@@ -12,7 +12,7 @@ The lab's purpose is to practise Scrum using GitHub Projects. Appendix A provide
 - **Developers:** @AnasMalick887 and @chotimau — estimation, child tasks, feature branches, code, tests and cross-reviews.
 - **Stakeholder:** Miss Mahnoor (instructor) — feedback and change request after Sprint 1.
 
-The current hand-written issue assignment of US-01 to the PO account requires team review because the handout expects the PO to stay available for backlog questions.
+US-01 (#2) and its four coding subtasks have been **provisionally reassigned to Anas** from the PO account, because the handout says the PO does not code. Team confirmation remains required.
 
 ## Required Product Backlog: Nine stories
 
@@ -23,15 +23,15 @@ The current hand-written issue assignment of US-01 to the PO account requires te
 | US-03 | Should | Edit/delete with active-loan constraints | #4 exists |
 | US-04 | Should | Search title, author, ISBN, category | #15 exists |
 | US-05 | Must | Register/remove members safely | #17 exists |
-| US-06 | Must | Issue a book: available copy, 14-day due date, max 3 active loans per member, avoid duplicate copy | PO must create |
-| US-07 | Must | Return a book by loan ID, update availability, active/returned loan listing | PO must create |
-| US-08 | Should | Overdue loans and Rs 10 per day fines | PO must create |
-| US-09 | Could | Dashboard: book titles, members, loans, overdue, reset sample data | PO must create |
+| US-06 | Must | Issue a book: available copy, 14-day due date, max 3 active loans per member, avoid duplicate copy | [#26](https://github.com/hanzala-core/Alpha-Library/issues/26) — drafted by SM, awaiting PO approval |
+| US-07 | Must | Return a book by loan ID, update availability, active/returned loan listing | [#27](https://github.com/hanzala-core/Alpha-Library/issues/27) — drafted by SM, awaiting PO approval |
+| US-08 | Should | Overdue loans and Rs 10 per day fines | [#28](https://github.com/hanzala-core/Alpha-Library/issues/28) — drafted by SM, awaiting PO approval |
+| US-09 | Could | Dashboard: book titles, members, loans, overdue, reset sample data | [#29](https://github.com/hanzala-core/Alpha-Library/issues/29) — drafted by SM, awaiting PO approval |
 
 The Developers agree the size with **planning poker**; do not fabricate an estimation meeting. L-sized stories must be split before entering a sprint.
 
 ## Correct sprint selection (example; team/PO must agree)
-**Sprint 1 proposed:** skeleton + US-01 (M) + US-02 (S). Sprint Goal: a librarian can add books and see the catalogue.
+**Sprint 1 proposed:** [skeleton #30](https://github.com/hanzala-core/Alpha-Library/issues/30) + US-01 (M) + US-02 (S). Sprint Goal: a librarian can add books and see the catalogue.
 
 **Sprint 2 proposed:** another realistic combination based on Sprint 1 feedback, e.g. US-05 (M) or US-04 (S). Do **not** predeclare US-03, US-04 and US-05 as committed or Done. The handout estimates roughly one M and one S for each short Sprint.
 
@@ -43,13 +43,13 @@ The Developers agree the size with **planning poker**; do not fabricate an estim
 - **Priority** single select: Must / Should / Could.
 - **Sprint** iteration field: Sprint 1 / Sprint 2.
 - **Product Backlog** table view: Title, Priority, Size, Status, grouped by Priority, not sorted.
-- **Sprint Board** board view: grouped by Status, filter \`sprint:@current\`.
+- **Sprint Board** board view: grouped by Status, filter `sprint:@current`.
 - Workflows: **Auto-add issues**; new items → Product Backlog; issue closed and PR merged → Done.
 - Main branch protection: pull request and at least one approval.
 - Scrum Log #1 pinned (and archived from board if included).
 - Sprint 1 and 2 **status charts** in Insights with real data, screenshotted and posted to Scrum Log.
 
-**Actual status:** Board, views, fields, workflow settings, protected branch and Insights evidence are not confirmed completed.
+**Actual status:** Board, views, fields, workflow settings, protected branch and Insights evidence are not confirmed completed. Track them in [SM issue #31](https://github.com/hanzala-core/Alpha-Library/issues/31).
 
 ## Process evidence: Nine phases from handout
 
@@ -61,7 +61,7 @@ The Developers agree the size with **planning poker**; do not fabricate an estim
 6. Sprint 1 Review (10 min) — demo latest main, PO checks acceptance, Stakeholder feedback, Sprint 1 status chart.
 7. Sprint 1 Retrospective (5 min) — real comments from each member and improvements.
 8. Backlog refinement (5 min) — actual instructor change request written by PO, resized/reordered.
-9. Sprint 2 (50 min) — plan, work, Daily Scrum, review, retrospective, chart, velocity and PO release \`v1.0\` on main describing delivered stories.
+9. Sprint 2 (50 min) — plan, work, Daily Scrum, review, retrospective, chart, velocity and PO release `v1.0` on main describing delivered stories.
 
 **No invented meeting comments, teacher feedback, contributor approvals, or sprint dates.**
 
@@ -69,17 +69,17 @@ The Developers agree the size with **planning poker**; do not fabricate an estim
 - Every acceptance criterion is met.
 - Code lives on a feature branch and is merged to main through a PR.
 - The **other Developer** reviewed and approved PR.
-- PR closes its own issue using \`Closes #...\`.
-- \`python main.py\` runs and \`python -m unittest\` passes.
+- PR closes its own issue using `Closes #...`.
+- `python main.py` runs and `python -m unittest` passes.
 - The Product Owner accepted the story at a real Sprint Review.
 
 ## Appendix A compatibility gap vs the proposed integration prototype (PR #25)
 
 | Handout Appendix A | PR #25 implementation |
 |---|---|
-| Python 3.10+; \`storage.py\` with \`library_data.json\`, sample data | Python 3.11+; SQLite \`library/database.py\`, local DB |
-| \`books.py\`, \`members.py\`, \`loans.py\`, \`dashboard.py\` | \`library/catalog.py\`, \`library/members.py\`, \`library/loans.py\`; dashboard missing |
-| \`test_library.py\`, \`python -m unittest -v\` | 36 tests across \`tests/\`; \`python -m unittest discover -s tests -v\` |
+| Python 3.10+; `storage.py` with `library_data.json`, sample data | Python 3.11+; SQLite `library/database.py`, local DB |
+| `books.py`, `members.py`, `loans.py`, `dashboard.py` | `library/catalog.py`, `library/members.py`, `library/loans.py`; dashboard missing |
+| `test_library.py`, `python -m unittest -v` | 36 tests across `tests/`; `python -m unittest discover -s tests -v` |
 | Due dates + max 3 loans + same-copy restriction | Not yet implemented |
 | Rs 10/day overdue/fine functions | Not yet implemented |
 | Dashboard and sample-data reset | Not yet implemented |
@@ -89,7 +89,7 @@ Passing 36 tests in PR #25 demonstrates quality of **that implementation's curre
 
 ## Next steps and owners
 
-1. **PO Rayyan:** create US-06 to US-09, confirm all nine story priorities, obtain teacher's change request, approve actual sprint goals/acceptance. Keep existing issues and history.
+1. **PO Rayyan:** review and approve SM-drafted US-06 to US-09 (#26–#29), confirm all nine story priorities, obtain teacher's real change request, and approve actual Sprint Goals and completed work. Keep existing issue history.
 2. **Developers Anas/Faiz:** agree estimates, select story tasks; implement and review through **their own accounts**, using Appendix A story-scoped code as instructed.
 3. **SM Hanzala:** configure the GitHub Project and protection settings in UI, organize real sprint evidence in Scrum Log, capture genuine Insights charts; make sure sprint capacity/DoD are honest.
 4. **Team:** run real application and tests, record actual review/retro and PO acceptance. Only then close eligible stories, mark Done and consider release.
