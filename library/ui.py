@@ -1,5 +1,5 @@
 """Minimal interactive command-line user interface."""
-from library import catalog, members, loans
+from library import catalog, dashboard, members, loans
 
 
 def render_table(headers, rows):
@@ -108,34 +108,63 @@ class LibraryCLI:
         book_id = self.number("Book ID: ")
         member_id = self.number("Member ID: ")
         loan_id = loans.issue_book(self.conn, book_id, member_id)
-        self.output(f"Book issued, loan #{loan_id}")
+        loan = next(item for item in loans.list_active_loans(self.conn) if item["id"] == loan_id)
+        self.output(f'Book issued, loan #{loan_id}; due {loan["due_date"]}')
 
     def ui_return_book(self):
         loan_id = self.number("Loan ID: ")
-        loans.return_book(self.conn, loan_id)
+        result = loans.return_book(self.conn, loan_id)
         self.output("Book returned")
+        if result["fine"]:
+            self.output(f'Late by {result["days_late"]} days; fine: Rs {result["fine"]}')
+        else:
+            self.output("No fine due")
 
     def ui_list_loans(self):
-        rows = loans.list_active_loans(self.conn)
+        include_returned = self.prompt("Include returned loans? (y/N): ").lower() in ("y", "yes")
+        rows = loans.list_loans(self.conn, include_returned=include_returned)
+        if not rows:
+            self.output("No loans found" if include_returned else "No active loans")
+            return
+        self.output(render_table(
+            ("Loan ID", "Title", "Member", "Issued", "Due", "Status", "Days late", "Fine (Rs)"),
+            [(l["id"], l["title"], l["member"], l["issued_at"], l["due_date"],
+              l["status"], l["days_late"], l["fine"]) for l in rows],
+        ))
+
+    def ui_dashboard(self):
+        data = dashboard.dashboard_data(self.conn)
         self.output(
-            render_table(("Loan ID", "Title", "Member", "Issued"),
-                         [(l["id"], l["title"], l["member"], l["issued_at"]) for l in rows])
-            if rows else "No active loans"
+            "\n=== LIBRARY DASHBOARD ===\n"
+            f'Book titles: {data["book_titles"]}\n'
+            f'Registered members: {data["registered_members"]}\n'
+            f'Active loans: {data["active_loans"]}\n'
+            f'Overdue loans: {data["overdue_loans"]}'
         )
+        if data["overdue_list"]:
+            self.output(render_table(
+                ("Loan ID", "Title", "Member", "Due", "Days late", "Fine (Rs)"),
+                [(l["id"], l["title"], l["member"], l["due_date"],
+                  l["days_late"], l["fine"]) for l in data["overdue_list"]],
+            ))
+        else:
+            self.output("No overdue loans")
+
+    def ui_reset_sample_data(self):
+        if self.prompt("This replaces ALL library data with demo data. Type RESET to confirm: ") != "RESET":
+            self.output("Sample-data reset cancelled")
+            return
+        dashboard.reset_sample_data(self.conn, confirm=True)
+        self.output("Sample data restored; all previous books, members, and loans were replaced.")
 
     def run(self):
         actions = {
-            "1": self.ui_add_book,
-            "2": self.ui_list_books,
-            "3": self.ui_edit_book,
-            "4": self.ui_delete_book,
-            "5": self.ui_search_books,
-            "6": self.ui_register_member,
-            "7": self.ui_list_members,
-            "8": self.ui_remove_member,
-            "9": self.ui_issue_book,
-            "10": self.ui_return_book,
-            "11": self.ui_list_loans,
+            "1": self.ui_add_book, "2": self.ui_list_books, "3": self.ui_edit_book,
+            "4": self.ui_delete_book, "5": self.ui_search_books,
+            "6": self.ui_register_member, "7": self.ui_list_members,
+            "8": self.ui_remove_member, "9": self.ui_issue_book,
+            "10": self.ui_return_book, "11": self.ui_list_loans,
+            "12": self.ui_dashboard, "13": self.ui_reset_sample_data,
         }
         while True:
             self.output(
@@ -143,7 +172,7 @@ class LibraryCLI:
                 "1 Add book | 2 List books | 3 Edit book | 4 Delete book\n"
                 "5 Search books | 6 Register member | 7 List members\n"
                 "8 Remove member | 9 Issue book | 10 Return book\n"
-                "11 Active loans | 0 Exit"
+                "11 Loans (active/returned) | 12 Dashboard | 13 Reset sample data | 0 Exit"
             )
             try:
                 choice = self.prompt("Choose option: ")

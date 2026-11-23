@@ -1,10 +1,10 @@
-"""SQLite storage and database initialization."""
+"""SQLite storage and non-destructive schema initialization."""
 import sqlite3
 from pathlib import Path
 
 
 def connect(path="alpha_library.db"):
-    """Open a SQLite connection and ensure that the schema is present."""
+    """Open a SQLite connection, preserving records while upgrading the schema."""
     if str(path) != ":memory:":
         Path(path).expanduser().resolve().parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(path))
@@ -31,18 +31,22 @@ def connect(path="alpha_library.db"):
             book_id INTEGER NOT NULL REFERENCES books(id),
             member_id INTEGER NOT NULL REFERENCES members(id),
             issued_at TEXT NOT NULL,
+            due_date TEXT,
             returned_at TEXT,
             CHECK (returned_at IS NULL OR returned_at >= issued_at)
         );
         CREATE INDEX IF NOT EXISTS idx_loans_book_active ON loans(book_id, returned_at);
         CREATE INDEX IF NOT EXISTS idx_loans_member_active ON loans(member_id, returned_at);
     """)
-    # Add archive flags to databases created by earlier prototype versions.
+    # Add archive flags and due dates to databases from earlier prototype versions.
     for table in ("books", "members"):
         columns = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
         if "is_active" not in columns:
-            conn.execute(
-                f"ALTER TABLE {table} ADD COLUMN is_active INTEGER NOT NULL DEFAULT 1"
-            )
+            conn.execute(f"ALTER TABLE {table} ADD COLUMN is_active INTEGER NOT NULL DEFAULT 1")
+    loan_columns = {row["name"] for row in conn.execute("PRAGMA table_info(loans)")}
+    if "due_date" not in loan_columns:
+        conn.execute("ALTER TABLE loans ADD COLUMN due_date TEXT")
+    # Existing loans retain their issue/return history and receive the new 14-day term.
+    conn.execute("UPDATE loans SET due_date=date(issued_at, '+14 days') WHERE due_date IS NULL")
     conn.commit()
     return conn
